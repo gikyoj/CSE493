@@ -17,7 +17,7 @@ import datasets
 if torch.cuda.is_available():
     cudnn.benchmark = True
 
-default_device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+default_device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
 
 def custom_svd(A, k=None, *, backend="arpack"):

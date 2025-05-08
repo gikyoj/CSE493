@@ -18,11 +18,11 @@ train_flag = name.split("-")[1]
 if model_flag == "r32p":
     import resnet
 
-    model = SequentialImageNetworkMod(resnet.resnet32()).cuda()
+    model = SequentialImageNetworkMod(resnet.resnet32()).to(default_device)
 elif model_flag == "r18":
     from pytorch_cifar.models import resnet
 
-    model = SequentialImageNetwork(resnet.ResNet18()).cuda()
+    model = SequentialImageNetwork(resnet.ResNet18()).to(default_device)
 else:
     raise NotImplementedError
 

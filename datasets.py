@@ -243,7 +243,7 @@ def make_dataloader(dataset: Dataset, batch_size, *, shuffle=True, drop_last=Tru
         dataset,
         batch_size=batch_size,
         shuffle=shuffle,
-        num_workers=4,
+        num_workers=0,
         pin_memory=True,
         drop_last=drop_last,
     )
