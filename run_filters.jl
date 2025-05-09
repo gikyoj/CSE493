@@ -1,5 +1,9 @@
 using Printf
 using NPZ
+import Pkg
+Pkg.add("Seaborn")
+Pkg.add("Pandas")
+
 include("util.jl")
 include("kmeans_filters.jl")
 include("quantum_filters.jl")
