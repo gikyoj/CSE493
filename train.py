@@ -26,7 +26,7 @@ elif model_flag == "r18":
 else:
     raise NotImplementedError
 
-eps = int(re.search(r"[0-9]+$", name).group())
+eps = int(re.search(r"[0-9]+$", name.split("-")[3]).group())
 poisoner_flag = name.split("-")[3][:3]
 clean_label = int(name.split("-")[2][0])
 target_label = int(name.split("-")[2][1])
