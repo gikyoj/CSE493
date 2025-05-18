@@ -14,7 +14,7 @@ for name in ARGS
     target_label = parse(Int, split(name, "-")[3][end:end])
     reps = npzread("output/$(name)/label_$(target_label)_reps.npy")'
     n = size(reps)[2]
-    eps = parse(Int, match(r"[0-9]+$", name).match)
+    eps = parse(Int, match(r"[0-9]+$", split(name, "-")[4]).match)
     removed = round(Int, 1.5*eps)
 
     @printf("%s: Running PCA filter\n", name)
