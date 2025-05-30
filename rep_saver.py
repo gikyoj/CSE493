@@ -29,6 +29,8 @@ if model_flag == "r32p":
     layer = 14
 elif model_flag == "r18":
     layer = 13
+elif model_flag == "dla":
+    layer = 4
 
 for i in trange(lsd.n, dynamic_ncols=True):
     target_reps = compute_all_reps(model, lsd.subset(i), layers=[layer], flat=True)[

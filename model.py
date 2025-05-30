@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import resnet as resnet_mod
 import pytorch_cifar.models.resnet as resnet
 import collections
+import dla
 
 class BasicBlockNoReLU(nn.Module):
     expansion = 1
@@ -116,6 +117,33 @@ class SequentialImageNetworkMod(nn.Sequential):
             net.final_bn,
             nn.LeakyReLU(0.1),
             nn.AvgPool2d(8),
+            nn.Flatten(),
+            net.linear,
+        )
+
+    @property
+    def net(self):
+        return self.net_holder[0]
+    
+class SequentialImageNetworkDLA(nn.Sequential):
+    def __init__(self, net=dla.DLA()):
+        if isinstance(net, collections.OrderedDict):
+            super().__init__(net)
+            return
+
+        self.net_holder = (net,)
+        i = 1
+        layers = []
+        name = f"layer{i}"
+        while hasattr(net, name):
+            layers.extend(list(getattr(net, name)))
+            i += 1
+            name = f"layer{i}"
+
+        super().__init__(
+            net.base,
+            *layers,
+            nn.AvgPool2d(4),
             nn.Flatten(),
             net.linear,
         )

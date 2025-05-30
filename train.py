@@ -3,7 +3,7 @@ from torch import nn, optim
 from pathlib import Path
 from ranger_opt.ranger import ranger2020 as ranger
 
-from model import SequentialImageNetwork, SequentialImageNetworkMod
+from model import SequentialImageNetwork, SequentialImageNetworkMod, SequentialImageNetworkDLA
 from util import *
 from datasets import *
 import re
@@ -23,6 +23,10 @@ elif model_flag == "r18":
     from pytorch_cifar.models import resnet
 
     model = SequentialImageNetwork(resnet.ResNet18()).to(default_device)
+elif model_flag == "dla":
+    import dla
+
+    model = SequentialImageNetworkDLA(dla.DLA()).to(default_device)
 else:
     raise NotImplementedError
 
