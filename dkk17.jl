@@ -101,7 +101,7 @@ function cov_estimation_iterate(S′, ε, τ=0.1, k=nothing; iters=nothing, limi
         else
             S′k, _ = pca(S′, k)
         end
-        select = cov_estimation_filter(S′k, ε, τ, limit=limit)
+        select = cov_estimation_filter(S′k, ε, τ, limit=limit, method=:arpack)
         if select isa MvNormal
             println("Terminating early $(i) success...")
             break

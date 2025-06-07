@@ -3,7 +3,7 @@ from torch import nn, optim
 from pathlib import Path
 from ranger_opt.ranger import ranger2020 as ranger
 
-from model import SequentialImageNetwork, SequentialImageNetworkMod
+from model import SequentialImageNetwork, SequentialImageNetworkMod, SequentialImageNetworkDLA
 from util import *
 from datasets import *
 import re
@@ -18,15 +18,19 @@ train_flag = name.split("-")[1]
 if model_flag == "r32p":
     import resnet
 
-    model = SequentialImageNetworkMod(resnet.resnet32()).cuda()
+    model = SequentialImageNetworkMod(resnet.resnet32()).to(default_device)
 elif model_flag == "r18":
     from pytorch_cifar.models import resnet
 
-    model = SequentialImageNetwork(resnet.ResNet18()).cuda()
+    model = SequentialImageNetwork(resnet.ResNet18()).to(default_device)
+elif model_flag == "dla":
+    import dla
+
+    model = SequentialImageNetworkDLA(dla.DLA()).to(default_device)
 else:
     raise NotImplementedError
 
-eps = int(re.search(r"[0-9]+$", name).group())
+eps = int(re.search(r"[0-9]+$", name.split("-")[3]).group())
 poisoner_flag = name.split("-")[3][:3]
 clean_label = int(name.split("-")[2][0])
 target_label = int(name.split("-")[2][1])
